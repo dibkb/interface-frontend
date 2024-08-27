@@ -1,9 +1,14 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { ChangeEvent } from "react";
 import { FileUploadIcon } from "./svg/FileUploadIcon";
+import { cn } from "@/lib/utils";
+import { XmarkIcon } from "./svg/XmarkIcon";
 interface FileUploadInterface {
+  file: File | null;
   setFile: React.Dispatch<React.SetStateAction<File | null>>;
+  label: string;
 }
-export const FileUpload = ({ setFile }: FileUploadInterface) => {
+export const FileUpload = ({ file, setFile, label }: FileUploadInterface) => {
   const handleFileChange = (
     e: ChangeEvent<HTMLInputElement>,
     setFile: React.Dispatch<React.SetStateAction<File | null>>
@@ -22,20 +27,48 @@ export const FileUpload = ({ setFile }: FileUploadInterface) => {
       }
     }
   };
+  const handleRemoveFile = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setFile(null);
+  };
   return (
-    <label
-      className="flex-1 border rounded-md p-4 border-dashed flex items-center justify-center h-full hover:bg-blue-100 cursor-pointer hover:border-blue-500
-      "
-      htmlFor="paymentReport"
-    >
-      <div className="flex flex-col items-center">
-        <FileUploadIcon className="size-6 mb-3" />
-        <div className="flex items-center gap-1 group cursor-pointer font-medium">
-          <p className="text-blue-600">Choose file</p> to upload
-        </div>
-        <p className="text-xs text-zinc-500">.csv or .xlsx</p>
-      </div>
-      <div className="relative">
+    <div className="flex-1 flex flex-col min-h-96">
+      <p className="text-center mb-3">{label}</p>
+      <label
+        className={cn(
+          "border rounded-md p-4 border-dashed flex items-center justify-center  flex-1",
+          !file && "hover:bg-blue-100 cursor-pointer hover:border-blue-500"
+        )}
+        htmlFor={!file ? "paymentReport" : ""}
+      >
+        {!file ? (
+          <div className="flex flex-col items-center">
+            <FileUploadIcon className="w-6 h-6 mb-3" />
+            <div className="flex items-center gap-1 group cursor-pointer font-medium">
+              <span className="text-blue-600">Choose file</span> to upload
+            </div>
+            <p className="text-xs text-zinc-500">.csv or .xlsx</p>
+          </div>
+        ) : (
+          <main className="flex items-start min-w-96 justify-between px-4 py-1 rounded-md">
+            <div className="flex items-center gap-3 flex-1">
+              <img
+                width={30}
+                src={`https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/microsoft-excel-icon.png`}
+                alt=""
+              />
+              <div>
+                <p className="text-xs">{file.name}</p>
+                <p className="text-xs text-zinc-400">1MB</p>
+              </div>
+            </div>
+            <XmarkIcon
+              className="cursor-pointer size-5"
+              onClick={handleRemoveFile}
+            />
+          </main>
+        )}
         <input
           type="file"
           id="paymentReport"
@@ -43,7 +76,7 @@ export const FileUpload = ({ setFile }: FileUploadInterface) => {
           className="hidden"
           accept=".csv,.xlsx"
         />
-      </div>
-    </label>
+      </label>
+    </div>
   );
 };

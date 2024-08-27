@@ -8,12 +8,20 @@ export default function Home() {
 
   return (
     <main className="min-h-screen container mx-auto py-8 flex items-center justify-between">
-      <section className="w-full h-96 flex flex-col gap-5">
-        <form className="flex gap-4 h-full">
+      <section className="w-full flex flex-col gap-5">
+        <form className="flex gap-4 h-full flex-1">
           {/* paymentReport */}
-          <FileUpload setFile={setPaymentReport} />
+          <FileUpload
+            file={paymentReport}
+            setFile={setPaymentReport}
+            label="Upload Payment Report"
+          />
           {/* merchantReport */}
-          <FileUpload setFile={setMerchantReport} />
+          <FileUpload
+            file={merchantReport}
+            setFile={setMerchantReport}
+            label="Merchant Tax Report"
+          />
         </form>
         <button type="submit" className="border w-min">
           Upload
