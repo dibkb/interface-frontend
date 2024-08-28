@@ -3,6 +3,7 @@ import React, { ChangeEvent } from "react";
 import { FileUploadIcon } from "./svg/FileUploadIcon";
 import { cn } from "@/lib/utils";
 import { XmarkIcon } from "./svg/XmarkIcon";
+import { convertBytes } from "@/utils/convert-to-bytes";
 interface FileUploadInterface {
   file: File | null;
   setFile: React.Dispatch<React.SetStateAction<File | null>>;
@@ -26,12 +27,13 @@ export const FileUpload = ({ file, setFile, label }: FileUploadInterface) => {
         // TODO: alert
       }
     }
+    e.target.value = "";
   };
   const handleRemoveFile = (e: React.MouseEvent) => {
     e.preventDefault();
-    e.stopPropagation();
     setFile(null);
   };
+
   return (
     <div className="flex-1 flex flex-col min-h-96">
       <p className="text-center mb-3">{label}</p>
@@ -40,7 +42,7 @@ export const FileUpload = ({ file, setFile, label }: FileUploadInterface) => {
           "border rounded-md p-4 border-dashed flex items-center justify-center  flex-1",
           !file && "hover:bg-blue-100 cursor-pointer hover:border-blue-500"
         )}
-        htmlFor={!file ? "paymentReport" : ""}
+        htmlFor={!file ? label : ""}
       >
         {!file ? (
           <div className="flex flex-col items-center">
@@ -51,7 +53,7 @@ export const FileUpload = ({ file, setFile, label }: FileUploadInterface) => {
             <p className="text-xs text-zinc-500">.csv or .xlsx</p>
           </div>
         ) : (
-          <main className="flex items-start min-w-96 justify-between px-4 py-1 rounded-md">
+          <main className="flex items-start min-w-96 max-w-full justify-between px-4 py-1 rounded-md">
             <div className="flex items-center gap-3 flex-1">
               <img
                 width={30}
@@ -60,18 +62,20 @@ export const FileUpload = ({ file, setFile, label }: FileUploadInterface) => {
               />
               <div>
                 <p className="text-xs">{file.name}</p>
-                <p className="text-xs text-zinc-400">1MB</p>
+                <p className="text-xs text-zinc-400">
+                  {convertBytes(file.size)}
+                </p>
               </div>
             </div>
             <XmarkIcon
-              className="cursor-pointer size-5"
+              className="cursor-pointer size-5 hover:text-red-600"
               onClick={handleRemoveFile}
             />
           </main>
         )}
         <input
           type="file"
-          id="paymentReport"
+          id={label}
           onChange={(e) => handleFileChange(e, setFile)}
           className="hidden"
           accept=".csv,.xlsx"
