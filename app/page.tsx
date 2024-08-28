@@ -1,6 +1,8 @@
 "use client";
 import { SelectBothFiles } from "@/components/alerts/select-both-files";
 import { FileUpload } from "@/components/FileUpload";
+import { FileUploadIcon } from "@/components/svg/FileUploadIcon";
+import { Button } from "@/components/ui/button";
 import { FormDataType } from "@/types/form-data";
 import { MouseEvent, useState } from "react";
 
@@ -40,7 +42,7 @@ export default function Home() {
     <>
       <main className="min-h-screen container mx-auto py-8 flex items-center justify-between">
         <section className="w-full flex flex-col gap-5">
-          <div className="flex gap-4 h-full flex-1">
+          <div className="flex flex-col md:flex-row gap-4 h-full flex-1">
             {/* paymentReport */}
             <FileUpload
               file={paymentReport}
@@ -54,13 +56,13 @@ export default function Home() {
               label="Merchant Tax Report"
             />
           </div>
-          <button
-            type="submit"
-            className="border w-min"
+          <Button
+            className="flex items-center gap-4 mx-auto"
             onClick={uploadButtonHandler}
           >
+            <FileUploadIcon className="size-4" />
             Upload
-          </button>
+          </Button>
         </section>
         {JSON.stringify(response)}
       </main>
