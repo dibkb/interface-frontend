@@ -1,5 +1,5 @@
-"use client";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import { InterfaceSelectBothFiles } from "@/types/alert-comp";
+import React from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,25 +9,22 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "../ui/alert-dialog";
-import { InterfaceSelectBothFiles } from "@/types/alert-comp";
 
-export const SelectBothFiles = ({
+interface InterfaceGenericError extends InterfaceSelectBothFiles {
+  message?: string;
+}
+export const GenericError = ({
+  message,
   openAlert,
   onClose,
-}: InterfaceSelectBothFiles) => {
+}: InterfaceGenericError) => {
   return (
     <AlertDialog open={openAlert} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Please choose both files to upload
+            {message ?? "An unexpected error occured"}
           </AlertDialogTitle>
-          <AlertDialogDescription>
-            <span>
-              Select both the `Payment Report` and the `Merchant Tax Report`{" "}
-            </span>
-            <span>The files should be .csv or .xlsx</span>
-          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogAction onClick={onClose}>Okay</AlertDialogAction>

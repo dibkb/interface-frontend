@@ -1,4 +1,5 @@
 "use client";
+import { GenericError } from "@/components/alerts/generic-error";
 import { SelectBothFiles } from "@/components/alerts/select-both-files";
 import { FileUpload } from "@/components/FileUpload";
 import { FileUploadIcon } from "@/components/svg/FileUploadIcon";
@@ -10,11 +11,13 @@ export default function Home() {
   const [paymentReport, setPaymentReport] = useState<File | null>(null);
   const [merchantReport, setMerchantReport] = useState<File | null>(null);
   const [response, setResponse] = useState();
-  const [openAlert, setOpenAlert] = useState(false);
+  const [openAlert, setOpenAlert] = useState<openAlert>({
+    type: null,
+  });
   const uploadButtonHandler = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault;
     if (!paymentReport || !merchantReport) {
-      setOpenAlert(true);
+      setOpenAlert({ type: "fileError" });
       return;
     }
     const formData = new FormData();
@@ -27,14 +30,15 @@ export default function Home() {
         body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
       const data = await response.json();
-      setResponse(data);
-    } catch (error) {
-      console.error("Error:", error);
+      if (response.ok) {
+        setResponse(data);
+      } else {
+        setOpenAlert({ type: "serverError", message: data?.detail });
+      }
+    } catch (e) {
+      const error = e as Error;
+      // TODO: unexpected error, log
     } finally {
     }
   };
@@ -67,7 +71,20 @@ export default function Home() {
         {JSON.stringify(response)}
       </main>
       {/* render modals */}
-      <SelectBothFiles openAlert={openAlert} setOpenAlert={setOpenAlert} />
+      <SelectBothFiles
+        openAlert={openAlert.type === "fileError"}
+        onClose={() => setOpenAlert((prev) => ({ ...prev, type: null }))}
+      />
+      <GenericError
+        message={openAlert.message}
+        openAlert={openAlert.type === "serverError"}
+        onClose={() => setOpenAlert((prev) => ({ ...prev, type: null }))}
+      />
     </>
   );
+}
+
+interface openAlert {
+  type: "serverError" | "fileError" | null;
+  message?: string;
 }
