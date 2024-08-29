@@ -1,5 +1,5 @@
-import { InterfaceSelectBothFiles } from "@/types/alert-comp";
-import React from "react";
+import { InterfaceSelectBothFiles } from '@/types/alert-comp';
+import React from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,7 +8,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "../ui/alert-dialog";
+} from '../ui/alert-dialog';
 
 interface InterfaceGenericError extends InterfaceSelectBothFiles {
   message?: string;
@@ -23,7 +23,7 @@ export const GenericError = ({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {message ?? "An unexpected error occured"}
+            {message ?? 'An unexpected error occured'}
           </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogFooter>

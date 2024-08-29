@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { ChangeEvent } from "react";
-import { FileUploadIcon } from "./svg/FileUploadIcon";
-import { cn } from "@/lib/utils";
-import { XmarkIcon } from "./svg/XmarkIcon";
-import { convertBytes } from "@/utils/convert-to-bytes";
+import React, { ChangeEvent } from 'react';
+import { FileUploadIcon } from './svg/FileUploadIcon';
+import { cn } from '@/lib/utils';
+import { XmarkIcon } from './svg/XmarkIcon';
+import { convertBytes } from '@/utils/convert-to-bytes';
 interface FileUploadInterface {
   file: File | null;
   setFile: React.Dispatch<React.SetStateAction<File | null>>;
@@ -17,9 +17,9 @@ export const FileUpload = ({ file, setFile, label }: FileUploadInterface) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       if (
-        file.type === "text/csv" ||
+        file.type === 'text/csv' ||
         file.type ===
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       ) {
         setFile(file);
       } else {
@@ -27,7 +27,7 @@ export const FileUpload = ({ file, setFile, label }: FileUploadInterface) => {
         // TODO: alert
       }
     }
-    e.target.value = "";
+    e.target.value = '';
   };
   const handleRemoveFile = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -39,10 +39,10 @@ export const FileUpload = ({ file, setFile, label }: FileUploadInterface) => {
       <p className="text-center mb-3">{label}</p>
       <label
         className={cn(
-          "border rounded-md p-4 border-dashed flex items-center justify-center  flex-1",
-          !file && "hover:bg-blue-100 cursor-pointer hover:border-blue-500"
+          'border rounded-md p-4 border-dashed flex items-center justify-center  flex-1',
+          !file && 'hover:bg-blue-100 cursor-pointer hover:border-blue-500'
         )}
-        htmlFor={!file ? label : ""}
+        htmlFor={!file ? label : ''}
       >
         {!file ? (
           <div className="flex flex-col items-center">

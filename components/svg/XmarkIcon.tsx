@@ -1,5 +1,5 @@
-import { SVGPropType } from "@/types/svg";
-import React from "react";
+import { SVGPropType } from '@/types/svg';
+import React from 'react';
 
 export const XmarkIcon = (props: SVGPropType) => {
   return (

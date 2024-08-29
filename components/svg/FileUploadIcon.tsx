@@ -1,5 +1,5 @@
-import { SVGPropType } from "@/types/svg";
-import React from "react";
+import { SVGPropType } from '@/types/svg';
+import React from 'react';
 
 export const FileUploadIcon = (props: SVGPropType) => {
   return (

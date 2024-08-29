@@ -1,5 +1,5 @@
-"use client";
-import React, { Dispatch, SetStateAction, useState } from "react";
+'use client';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,8 +8,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "../ui/alert-dialog";
-import { InterfaceSelectBothFiles } from "@/types/alert-comp";
+} from '../ui/alert-dialog';
+import { InterfaceSelectBothFiles } from '@/types/alert-comp';
 
 export const SelectBothFiles = ({
   openAlert,
@@ -24,7 +24,7 @@ export const SelectBothFiles = ({
           </AlertDialogTitle>
           <AlertDialogDescription>
             <span>
-              Select both the `Payment Report` and the `Merchant Tax Report`{" "}
+              Select both the `Payment Report` and the `Merchant Tax Report`{' '}
             </span>
             <span>The files should be .csv or .xlsx</span>
           </AlertDialogDescription>

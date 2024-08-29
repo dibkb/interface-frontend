@@ -1,11 +1,11 @@
-"use client";
-import { GenericError } from "@/components/alerts/generic-error";
-import { SelectBothFiles } from "@/components/alerts/select-both-files";
-import { FileUpload } from "@/components/FileUpload";
-import { FileUploadIcon } from "@/components/svg/FileUploadIcon";
-import { Button } from "@/components/ui/button";
-import { FormDataType } from "@/types/form-data";
-import { MouseEvent, useState } from "react";
+'use client';
+import { GenericError } from '@/components/alerts/generic-error';
+import { SelectBothFiles } from '@/components/alerts/select-both-files';
+import { FileUpload } from '@/components/FileUpload';
+import { FileUploadIcon } from '@/components/svg/FileUploadIcon';
+import { Button } from '@/components/ui/button';
+import { FormDataType } from '@/types/form-data';
+import { MouseEvent, useState } from 'react';
 
 export default function Home() {
   const [paymentReport, setPaymentReport] = useState<File | null>(null);
@@ -17,7 +17,7 @@ export default function Home() {
   const uploadButtonHandler = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault;
     if (!paymentReport || !merchantReport) {
-      setOpenAlert({ type: "fileError" });
+      setOpenAlert({ type: 'fileError' });
       return;
     }
     const formData = new FormData();
@@ -25,8 +25,8 @@ export default function Home() {
     formData.append(FormDataType.payment_file, paymentReport);
 
     try {
-      const response = await fetch("http://localhost:8000/process-files/", {
-        method: "POST",
+      const response = await fetch('http://localhost:8000/process-files/', {
+        method: 'POST',
         body: formData,
       });
 
@@ -34,7 +34,7 @@ export default function Home() {
       if (response.ok) {
         setResponse(data);
       } else {
-        setOpenAlert({ type: "serverError", message: data?.detail });
+        setOpenAlert({ type: 'serverError', message: data?.detail });
       }
     } catch (e) {
       const error = e as Error;
@@ -51,7 +51,7 @@ export default function Home() {
             <FileUpload
               file={paymentReport}
               setFile={setPaymentReport}
-              label="Upload Payment Report"
+              label="Payment Report"
             />
             {/* merchantReport */}
             <FileUpload
@@ -72,12 +72,12 @@ export default function Home() {
       </main>
       {/* render modals */}
       <SelectBothFiles
-        openAlert={openAlert.type === "fileError"}
+        openAlert={openAlert.type === 'fileError'}
         onClose={() => setOpenAlert((prev) => ({ ...prev, type: null }))}
       />
       <GenericError
         message={openAlert.message}
-        openAlert={openAlert.type === "serverError"}
+        openAlert={openAlert.type === 'serverError'}
         onClose={() => setOpenAlert((prev) => ({ ...prev, type: null }))}
       />
     </>
@@ -85,6 +85,6 @@ export default function Home() {
 }
 
 interface openAlert {
-  type: "serverError" | "fileError" | null;
+  type: 'serverError' | 'fileError' | null;
   message?: string;
 }
