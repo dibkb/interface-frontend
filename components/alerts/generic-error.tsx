@@ -13,18 +13,12 @@ import {
 interface InterfaceGenericError extends InterfaceSelectBothFiles {
   message?: string;
 }
-export const GenericError = ({
-  message,
-  openAlert,
-  onClose,
-}: InterfaceGenericError) => {
+export const GenericError = ({ message, openAlert, onClose }: InterfaceGenericError) => {
   return (
     <AlertDialog open={openAlert} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            {message ?? 'An unexpected error occured'}
-          </AlertDialogTitle>
+          <AlertDialogTitle>{message ?? 'An unexpected error occured'}</AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogAction onClick={onClose}>Okay</AlertDialogAction>

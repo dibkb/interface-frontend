@@ -18,8 +18,7 @@ export const FileUpload = ({ file, setFile, label }: FileUploadInterface) => {
       const file = e.target.files[0];
       if (
         file.type === 'text/csv' ||
-        file.type ===
-          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       ) {
         setFile(file);
       } else {
@@ -62,9 +61,7 @@ export const FileUpload = ({ file, setFile, label }: FileUploadInterface) => {
               />
               <div>
                 <p className="text-xs">{file.name}</p>
-                <p className="text-xs text-zinc-400">
-                  {convertBytes(file.size)}
-                </p>
+                <p className="text-xs text-zinc-400">{convertBytes(file.size)}</p>
               </div>
             </div>
             <XmarkIcon

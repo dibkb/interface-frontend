@@ -48,11 +48,7 @@ export default function Home() {
         <section className="w-full flex flex-col gap-5">
           <div className="flex flex-col md:flex-row gap-4 h-full flex-1">
             {/* paymentReport */}
-            <FileUpload
-              file={paymentReport}
-              setFile={setPaymentReport}
-              label="Payment Report"
-            />
+            <FileUpload file={paymentReport} setFile={setPaymentReport} label="Payment Report" />
             {/* merchantReport */}
             <FileUpload
               file={merchantReport}
@@ -60,10 +56,7 @@ export default function Home() {
               label="Merchant Tax Report"
             />
           </div>
-          <Button
-            className="flex items-center gap-4 mx-auto"
-            onClick={uploadButtonHandler}
-          >
+          <Button className="flex items-center gap-4 mx-auto" onClick={uploadButtonHandler}>
             <FileUploadIcon className="size-4" />
             Upload
           </Button>
