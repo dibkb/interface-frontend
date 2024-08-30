@@ -7,9 +7,11 @@ import { Button } from '@/components/ui/button';
 import { useStore } from '@/store';
 import { FormDataType } from '@/types/form-data';
 import { ResponseData } from '@/types/process-data';
+import { useRouter } from 'next/navigation';
 import { MouseEvent, useState } from 'react';
 
 export default function Home() {
+  const router = useRouter();
   const { setMergedDf, setClassificationSummary, setToleranceSummary, setTransactionSummary } =
     useStore();
   const [paymentReport, setPaymentReport] = useState<File | null>(null);
@@ -41,6 +43,7 @@ export default function Home() {
         setClassificationSummary(typedData.classification_summary);
         setToleranceSummary(typedData.tolerance_summary);
         setTransactionSummary(typedData.transaction_summary);
+        router.push('/dashboard');
       } else {
         setOpenAlert({ type: 'serverError', message: data?.detail });
       }
@@ -69,7 +72,6 @@ export default function Home() {
             Upload
           </Button>
         </section>
-        {JSON.stringify(response)}
       </main>
       {/* render modals */}
       <SelectBothFiles
