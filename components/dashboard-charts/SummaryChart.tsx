@@ -22,7 +22,6 @@ const chartConfig = {} satisfies ChartConfig;
 
 export function SummaryChart() {
   const { transaction_summary } = useStore();
-  console.log(transaction_summary);
   return (
     <Card>
       <CardHeader>
