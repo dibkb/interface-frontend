@@ -4,13 +4,16 @@ import { SelectBothFiles } from '@/components/alerts/select-both-files';
 import { FileUpload } from '@/components/FileUpload';
 import { FileUploadIcon } from '@/components/svg/FileUploadIcon';
 import { Button } from '@/components/ui/button';
+import { useStore } from '@/store';
 import { FormDataType } from '@/types/form-data';
+import { ResponseData } from '@/types/process-data';
 import { MouseEvent, useState } from 'react';
 
 export default function Home() {
+  const { setMergedDf, setClassificationSummary, setToleranceSummary, setTransactionSummary } =
+    useStore();
   const [paymentReport, setPaymentReport] = useState<File | null>(null);
   const [merchantReport, setMerchantReport] = useState<File | null>(null);
-  const [response, setResponse] = useState();
   const [openAlert, setOpenAlert] = useState<openAlert>({
     type: null,
   });
@@ -32,7 +35,12 @@ export default function Home() {
 
       const data = await response.json();
       if (response.ok) {
-        setResponse(data);
+        // populate the zustand store
+        const typedData = data as ResponseData;
+        setMergedDf(typedData.merged_df);
+        setClassificationSummary(typedData.classification_summary);
+        setToleranceSummary(typedData.tolerance_summary);
+        setTransactionSummary(typedData.transaction_summary);
       } else {
         setOpenAlert({ type: 'serverError', message: data?.detail });
       }
