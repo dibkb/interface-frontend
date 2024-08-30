@@ -1,10 +1,12 @@
 'use client';
 
+import { Logtable } from '@/components/Logtable';
+import { LogResponse } from '@/types/api-response-body';
 import { useCallback, useEffect, useState } from 'react';
 
 const Page = () => {
   const [page, setPage] = useState(1);
-  const [results, setResults] = useState();
+  const [results, setResults] = useState<LogResponse[]>();
   useEffect(() => {
     fetchLogs().then((res) => setResults(res));
   }, []);
@@ -13,7 +15,12 @@ const Page = () => {
     setResults(results);
     setPage((prev) => prev - 1);
   }, [page]);
-  return <main className="min-h-screen container mx-auto ">{JSON.stringify(results)}</main>;
+  if (!results) return 'Loading....';
+  return (
+    <main className="min-h-screen container mx-auto pt-8">
+      <Logtable apiResults={results} />
+    </main>
+  );
 };
 
 async function fetchLogs(page = 1) {
