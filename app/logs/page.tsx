@@ -3,8 +3,7 @@
 import { useFetchLogs } from '@/components/hooks/useFetchLogs';
 import { Logtable } from '@/components/Logtable';
 import { Button } from '@/components/ui/button';
-import { LogResponse } from '@/types/api-response-body';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 const Page = () => {
   const { data, loading, error, fetchLogs } = useFetchLogs();
@@ -18,7 +17,11 @@ const Page = () => {
     },
     [data, fetchLogs]
   );
-  if (!data || loading) return 'Loading....';
+
+  if (loading) return <div className="text-center py-8">Loading...</div>;
+  if (error) return <div className="text-center py-8 text-red-500">Error: {error}</div>;
+  if (!data) return null;
+
   return (
     <main className="min-h-screen container mx-auto pt-8">
       <Logtable apiResults={data.results}>

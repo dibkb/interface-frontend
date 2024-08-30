@@ -4,7 +4,6 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -45,7 +44,7 @@ export const Logtable = ({ apiResults, children }: LogtableInterface) => {
               <TableCell className="md:col-span-1">{res.message}</TableCell>
               <TableCell className="md:col-span-2">{res.context}</TableCell>
               <TableCell className="md:col-span-2">
-                {new Date(res.timestamp).toLocaleString('en').toString()}
+                {new Date(res.timestamp).toLocaleString('en-IN').toString()}
               </TableCell>
               <TableCell
                 className={
