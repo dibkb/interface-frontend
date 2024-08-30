@@ -29,8 +29,8 @@ export const Logtable = ({ apiResults, children }: LogtableInterface) => {
             <TableHead className="md:col-span-1">LEVEL</TableHead>
             <TableHead className="md:col-span-2">MESSAGE</TableHead>
             <TableHead className="md:col-span-2">CONTEXT</TableHead>
-            <TableHead className="md:col-span-3">TIME STAMP</TableHead>
-            <TableHead className="whitespace-nowrap">ADDITIONAL INFO</TableHead>
+            <TableHead className="md:col-span-2">TIME STAMP</TableHead>
+            <TableHead className="whitespace-nowrap md:col-span-2">ADDITIONAL INFO</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -41,7 +41,7 @@ export const Logtable = ({ apiResults, children }: LogtableInterface) => {
                   {res.level}
                 </Badge>
               </TableCell>
-              <TableCell className="md:col-span-1">{res.message}</TableCell>
+              <TableCell className="md:col-span-2">{res.message}</TableCell>
               <TableCell className="md:col-span-2">{res.context}</TableCell>
               <TableCell className="md:col-span-2">
                 {new Date(res.timestamp).toLocaleString('en-IN').toString()}
@@ -49,12 +49,12 @@ export const Logtable = ({ apiResults, children }: LogtableInterface) => {
               <TableCell
                 className={
                   (cn(
-                    'md:col-span-3 break-words whitespace-pre-wrap overflow-wrap break-word text-xs'
+                    'md:col-span-2 break-words whitespace-pre-wrap overflow-wrap break-word text-xs overflow-hidden'
                   ),
                   mono.className)
                 }
               >
-                {JSON.stringify(res.additional_info)}
+                {JSON.stringify(res.additional_info, null, 2)}
               </TableCell>
             </TableRow>
           ))}
