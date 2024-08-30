@@ -17,7 +17,7 @@ import { cn } from '@/lib/utils';
 const mono = Courier_Prime({ weight: '400', subsets: ['latin'] });
 
 interface LogtableInterface {
-  apiResults: LogResponse[];
+  apiResults: LogResponse['results'];
   children?: React.ReactNode;
 }
 export const Logtable = ({ apiResults, children }: LogtableInterface) => {
