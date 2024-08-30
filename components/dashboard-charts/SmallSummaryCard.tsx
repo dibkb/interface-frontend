@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Card, CardContent } from '../ui/card';
+import { Card } from '../ui/card';
 import { ChevronRight } from '../svg/ChevronRight';
 import { cn } from '@/lib/utils';
 interface SmallSummaryCard {
@@ -7,7 +9,8 @@ interface SmallSummaryCard {
   count: number;
   className?: string;
 }
-export const SmallSummaryCard = ({ title, count, className }: SmallSummaryCard) => {
+export const SmallSummaryCard = ({ title = '', count = 0, className }: SmallSummaryCard) => {
+  if (!title || !count) return null;
   return (
     <Card
       className={cn(
