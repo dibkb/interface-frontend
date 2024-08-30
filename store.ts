@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import {
   ClassificationSummaryRecord,
   MergedDfRecord,
@@ -17,13 +18,22 @@ interface StoreState {
   setTransactionSummary: (data: TransactionSummaryRecord[]) => void;
 }
 
-export const useStore = create<StoreState>((set) => ({
-  merged_df: [],
-  classification_summary: [],
-  tolerance_summary: [],
-  transaction_summary: [],
-  setMergedDf: (data) => set({ merged_df: data }),
-  setClassificationSummary: (data) => set({ classification_summary: data }),
-  setToleranceSummary: (data) => set({ tolerance_summary: data }),
-  setTransactionSummary: (data) => set({ transaction_summary: data }),
-}));
+export const useStore = create<StoreState>()(
+  persist(
+    (set, get) => ({
+      merged_df: [],
+      classification_summary: [],
+      tolerance_summary: [],
+      transaction_summary: [],
+
+      setMergedDf: (data) => set({ merged_df: data }),
+      setClassificationSummary: (data) => set({ classification_summary: data }),
+      setToleranceSummary: (data) => set({ tolerance_summary: data }),
+      setTransactionSummary: (data) => set({ transaction_summary: data }),
+    }),
+    {
+      name: 'INTERFACE-TRANSFORMATION',
+      getStorage: () => localStorage,
+    }
+  )
+);
