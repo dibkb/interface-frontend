@@ -6,7 +6,7 @@ import { SummaryChart } from '@/components/dashboard-charts/SummaryChart';
 import { ToleranceChart } from '@/components/dashboard-charts/TolleranceChart';
 import { useStore } from '@/store';
 import {
-  calculateTolalPayment,
+  calculatePaymentPending,
   calculateToleranceBreach,
   calculateTotalOrderAndPayment,
 } from '@/utils/calucate-dashboard-metrics';
@@ -23,7 +23,7 @@ const Dashboard = () => {
   const totalOrders = merged_df?.length ?? 0;
   const totalTolerance = calculateToleranceBreach(merged_df ?? []);
   const totalOrderAndPayment = calculateTotalOrderAndPayment(merged_df ?? []);
-  const totalPayment = calculateTolalPayment(merged_df ?? []);
+  const paymentPending = calculatePaymentPending(merged_df ?? []);
 
   return (
     <main className="container mx-auto min-h-screen py-6">
@@ -32,7 +32,7 @@ const Dashboard = () => {
         <SmallSummaryCard title="Total orders" count={totalOrders} className="col-span-1" />
         <SmallSummaryCard title="Tolerance rate breached" count={totalTolerance} />
         <SmallSummaryCard title="Order & Payment Received" count={totalOrderAndPayment} />
-        <SmallSummaryCard title="Payment Received" count={totalPayment} />
+        <SmallSummaryCard title="Payment Pending" count={paymentPending} />
       </section>
       <main className="grid md:grid-cols-2 gap-4">
         <SummaryChart />

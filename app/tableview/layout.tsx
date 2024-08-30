@@ -1,7 +1,8 @@
 'use client';
 
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
@@ -17,35 +18,58 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-const dropdownItems = [{ label: 'order&payment' }, { label: 'Themes' }, { label: 'GitHub' }];
+const dropdownItems = [
+  { label: 'Total Orders', param: 'total-orders' },
+  { label: 'Orders & Payment Received', param: 'order-payment' },
+  { label: 'Tolerance rate breached', param: 'total-rate-breched' },
+  { label: 'Payment Pending', param: 'payment-pending' },
+];
 
 export default function TableViewLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const params = useParams();
+  const [selected, setSelected] = useState<string>(dropdownItems[0].label);
 
   useEffect(() => {
-    if (Object.keys(params).length === 0) {
-      router.push('/tableview/order&payment');
+    if (typeof params.option === 'string') {
+      const match = dropdownItems.find((d) => d.param === params.option);
+      if (match) {
+        setSelected(match.label);
+      } else {
+        // If no match found, redirect to the first option
+        router.push(`/tableview/${dropdownItems[0].param}`);
+      }
+    } else if (params.option === undefined) {
+      // If no option is provided, redirect to the first option
+      router.push(`/tableview/${dropdownItems[0].param}`);
     }
-  }, [params, router]);
+  }, [params.option, router]);
+
+  const handleOptionClick = (param: string) => {
+    router.push(`/tableview/${param}`);
+  };
 
   return (
     <div className="min-h-screen container mx-auto py-6">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink className="font-medium text-indigo-600">TableView</BreadcrumbLink>
+            <BreadcrumbLink asChild>
+              <Link href="/tableview" className="font-medium text-indigo-600">
+                TableView
+              </Link>
+            </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-1">
-                <BreadcrumbEllipsis className="h-4 w-4" />
+                {selected}
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
                 {dropdownItems.map((item) => (
-                  <DropdownMenuItem key={item.label}>
-                    {/* <a href={item}>{item.label}</a> */}
+                  <DropdownMenuItem key={item.param} onClick={() => handleOptionClick(item.param)}>
+                    {item.label}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>

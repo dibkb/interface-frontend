@@ -16,7 +16,7 @@ export function calculateTotalOrderAndPayment(df: MergedDfRecord[]) {
     return acc;
   }, 0);
 }
-export function calculateTolalPayment(df: MergedDfRecord[]) {
+export function calculatePaymentPending(df: MergedDfRecord[]) {
   return df.reduce((acc, cur) => {
     if (cur.mark === 'Payment Pending') {
       acc++;
