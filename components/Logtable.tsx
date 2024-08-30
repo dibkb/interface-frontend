@@ -18,12 +18,13 @@ const mono = Courier_Prime({ weight: '400', subsets: ['latin'] });
 
 interface LogtableInterface {
   apiResults: LogResponse[];
+  children?: React.ReactNode;
 }
-export const Logtable = ({ apiResults }: LogtableInterface) => {
+export const Logtable = ({ apiResults, children }: LogtableInterface) => {
   return (
     <div className="pb-8">
       <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
+        <TableCaption>A list of the recent logs</TableCaption>
         <TableHeader>
           <TableRow className="grid grid-cols-1 md:grid-cols-9">
             <TableHead className="md:col-span-1">LEVEL</TableHead>
@@ -43,21 +44,24 @@ export const Logtable = ({ apiResults }: LogtableInterface) => {
               </TableCell>
               <TableCell className="md:col-span-1">{res.message}</TableCell>
               <TableCell className="md:col-span-2">{res.context}</TableCell>
-              <TableCell className="md:col-span-2">{res.timestamp}</TableCell>
+              <TableCell className="md:col-span-2">
+                {new Date(res.timestamp).toLocaleString('en').toString()}
+              </TableCell>
               <TableCell
                 className={
                   (cn(
-                    'md:col-span-3 break-words whitespace-pre-wrap overflow-wrap break-word text-xs text-zinc-700'
+                    'md:col-span-3 break-words whitespace-pre-wrap overflow-wrap break-word text-xs'
                   ),
                   mono.className)
                 }
               >
-                {JSON.stringify(res.additional_info, null, 2)}
+                {JSON.stringify(res.additional_info)}
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      {children}
     </div>
   );
 };
