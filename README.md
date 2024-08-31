@@ -1,3 +1,6 @@
+### The deployed next app is available as 
+[https://interface-assignment-next.dibkb.xyz/](https://interface-assignment-next.dibkb.xyz/)
+
 # How to Run the Next.js App Locally
 
 Follow these steps to clone the repository, build the Docker image, and run the Next.js application locally.
