@@ -1,7 +1,8 @@
+import { SERVER_URL } from '@/config';
 import { LogResponse } from '@/types/api-response-body';
 import { useCallback, useEffect, useState } from 'react';
 
-const API_URL = 'http://localhost:8000/logs';
+const API_URL = `${SERVER_URL}/logs`;
 
 export const useFetchLogs = (initialPage = 1) => {
   const [data, setData] = useState<LogResponse | null>(null);

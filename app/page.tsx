@@ -4,6 +4,7 @@ import { SelectBothFiles } from '@/components/alerts/select-both-files';
 import { FileUpload } from '@/components/FileUpload';
 import { FileUploadIcon } from '@/components/svg/FileUploadIcon';
 import { Button } from '@/components/ui/button';
+import { SERVER_URL } from '@/config';
 import { useStore } from '@/store';
 import { FormDataType } from '@/types/form-data';
 import { ResponseData } from '@/types/process-data';
@@ -30,7 +31,7 @@ export default function Home() {
     formData.append(FormDataType.payment_file, paymentReport);
 
     try {
-      const response = await fetch('http://localhost:8000/process-files/', {
+      const response = await fetch(SERVER_URL, {
         method: 'POST',
         body: formData,
       });
