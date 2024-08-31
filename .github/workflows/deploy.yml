@@ -1,4 +1,4 @@
-name: Build and Deploy to Docker Hub
+name: CD
 
 on:
   push:
@@ -28,3 +28,15 @@ jobs:
 
       - name: Verify Pushed Image
         run: docker pull dibkb/interface-assignment-next:latest
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo docker pull dibkb/interface-assignment-next:latest
+            sudo docker stop interface-assignment-next || true
+            sudo docker rm interface-assignment-next || true
+            sudo docker run -d --name web-app -p 3000:3000 dibkb/interface-assignment-next:latest
