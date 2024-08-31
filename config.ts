@@ -1,1 +1,1 @@
-export const SERVER_URL = `https://interface-assignment-server.dibkb.xyz`;
+export const SERVER_URL = `https://interface-assignment-server.dibkb.xyz/`;

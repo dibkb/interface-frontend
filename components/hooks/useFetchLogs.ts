@@ -2,7 +2,7 @@ import { SERVER_URL } from '@/config';
 import { LogResponse } from '@/types/api-response-body';
 import { useCallback, useEffect, useState } from 'react';
 
-const API_URL = `${SERVER_URL}/logs`;
+const LOGS_URL = `${SERVER_URL}/logs`;
 
 export const useFetchLogs = (initialPage = 1) => {
   const [data, setData] = useState<LogResponse | null>(null);
@@ -13,7 +13,7 @@ export const useFetchLogs = (initialPage = 1) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${API_URL}?page=${page}`);
+      const response = await fetch(`${LOGS_URL}?page=${page}`);
       if (!response.ok) throw new Error('Failed to fetch logs');
       const json: LogResponse = await response.json();
       setData(json);

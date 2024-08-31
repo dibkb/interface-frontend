@@ -31,7 +31,7 @@ export default function Home() {
     formData.append(FormDataType.payment_file, paymentReport);
 
     try {
-      const response = await fetch(SERVER_URL, {
+      const response = await fetch(`${SERVER_URL}/process-files`, {
         method: 'POST',
         body: formData,
       });
