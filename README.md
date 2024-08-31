@@ -53,6 +53,37 @@ Ensure you have the following installed on your machine:
    ```bash
    http://localhost:3000
    ```
+
+# Frontend Routes
+
+## `/`
+- Upload the payment-report and merchant-tax-report
+- On success, redirects to `/dashboard`
+
+## `/dashboard`
+- Get an extensive report on the ETL process after processing the files
+- Visual and statistical report
+
+## `/tableview/total-orders`
+- Get the whole transformed dataset with pagination
+
+## `/tableview/order-payment`
+- Get the whole transformed dataset where:
+ - `TransactionType_payment === "Order & Payment Received"`
+
+## `/tableview/total-rate-breached`
+- Get the whole transformed dataset where:
+ - `ToleranceCheck` is breached and above the threshold metric
+
+## `/tableview/payment-pending`
+- Get the whole transformed dataset where:
+ - `TransactionType_payment === "PaymentPending"`
+
+## `/logs`
+- Get all the logs of the backend process:
+- All updates of the ELT transformation pipleine
+
+
    
 ## CI/CD Pipeline for a Next.js App
 
