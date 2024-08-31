@@ -37,6 +37,14 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             sudo docker pull dibkb/interface-assignment-next:latest
-            sudo docker stop interface-assignment-next || true
-            sudo docker rm interface-assignment-next || true
+
+            # Stop and remove the existing container if it exists
+            sudo docker stop web-app || true
+            sudo docker rm web-app || true
+
+            # Run the new container
             sudo docker run -d --name web-app -p 3000:3000 dibkb/interface-assignment-next:latest
+
+            # Clean up unused images and volumes
+            sudo docker image prune -af
+            sudo docker volume prune -f
