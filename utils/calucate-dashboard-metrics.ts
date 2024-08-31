@@ -24,3 +24,13 @@ export function calculatePaymentPending(df: MergedDfRecord[]) {
     return acc;
   }, 0);
 }
+
+export function extractToleranceBreach(df: MergedDfRecord[]) {
+  return df.filter((d) => d.ToleranceCheck === 'Tolerance Breached');
+}
+export function extractTotalOrderAndPayment(df: MergedDfRecord[]) {
+  return df.filter((d) => d.mark === 'Order & Payment Received');
+}
+export function extractPaymentPending(df: MergedDfRecord[]) {
+  return df.filter((d) => d.mark === 'Payment Pending');
+}
