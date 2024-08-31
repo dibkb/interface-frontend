@@ -47,14 +47,46 @@ Ensure you have the following installed on your machine:
    docker run -p 3000:3000 image-name
    ```
 4. **Access the Application**
-
-  Open your web browser and go to:
-
+   
+   Open your web browser and go to:
+   
    ```bash
    http://localhost:3000
    ```
    
-   
+## CI/CD Pipeline for a Next.js App
+
+### CI Pipeline
+
+| Step | Description | Icon |
+|---|---|---|
+| CI Start | Begin the CI process. | 🟢 |
+| Push to prod Branch | Push code changes to the `prod` branch. | 🔀 |
+| Install dependencies | Install required packages and dependencies. | 💻 |
+| Format Code | Ensure consistent code formatting using a linter. | 🧹 |
+| Lint Code | Check for potential code quality issues. | ✅ |
+| Run Build | Build the Next.js app into production-ready bundles. | ⚙️ |
+| CI End | Conclude the CI process. | 🟢 |
+
+### CD Pipeline
+
+| Step | Description | Icon |
+|---|---|---|
+| CD Start | Begin the CD process. | 🟢 
+| Push to Prod | Push code changes to the `prod` branch. | 🔀 |
+| Create Build Image | Create a Docker image containing the built Next.js app. | 📦 |
+| Push to Docker Hub | Push the Docker image to Docker Hub for distribution. | ⬆️ |
+| SSH into EC2 | Connect to the EC2 instance via SSH. | 🖥️ |
+| Pull Latest Docker Image | Pull the latest Docker image from Docker Hub. | ⬇️ |
+| Deploy App on Server | Deploy the app on the EC2 instance using Docker Compose or a similar tool. | 🌐 |
+| CD End | Conclude the CD process. | 🟢 |
+
+
+![CI/CD pipleline diagram](https://github.com/user-attachments/assets/960d68d7-f63a-4131-870e-c71877ff7939)
+
+
+
+
 
    
 
