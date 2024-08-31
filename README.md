@@ -20,9 +20,8 @@ Ensure you have the following installed on your machine:
 
    First make sure that the bakend is running.
    Go to this link and setup the backend correctly
-   ```bash
-   https://github.com/dibkb/interface-assignment-backend
-   ```
+   - [https://github.com/dibkb/interface-assignment-backend](https://github.com/dibkb/interface-assignment-backend)
+
    The backend should be up and running if set up correctly in
    ```
    http://localhost:8000
