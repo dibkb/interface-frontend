@@ -5,7 +5,6 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
   Breadcrumb,
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
@@ -21,7 +20,6 @@ import { useStore } from '@/store';
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -33,6 +31,8 @@ import {
   extractToleranceBreach,
   extractTotalOrderAndPayment,
 } from '@/utils/calucate-dashboard-metrics';
+import { Button } from '@/components/ui/button';
+import { createPaginator } from '@/utils/paginator';
 
 const dropdownItems = [
   { label: 'Total Orders', param: 'total-orders' },
@@ -46,7 +46,9 @@ export default function TableViewLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const params = useParams();
   const [selected, setSelected] = useState<string>(dropdownItems[0].label);
-  const [displayResults, setDisplayResults] = useState<MergedDfRecord[]>();
+  const [displayResults, setDisplayResults] = useState<MergedDfRecord[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [paginator, setPaginator] = useState<ReturnType<typeof createPaginator> | null>(null);
 
   useEffect(() => {
     if (!merged_df) return; // Guard clause
@@ -58,30 +60,25 @@ export default function TableViewLayout({ children }: { children: ReactNode }) {
         const label = match.label;
         switch (label) {
           case 'Total Orders':
-            // select all
             results = merged_df;
             break;
           case 'Orders & Payment Received':
-            // select with only orders & payment recieved
             results = extractTotalOrderAndPayment(merged_df);
             break;
           case 'Tolerance rate breached':
-            // select with only tolerance rate breached
             results = extractToleranceBreach(merged_df);
-
             break;
           case 'Payment Pending':
-            // select with only payment pending
             results = extractPaymentPending(merged_df);
             break;
         }
         setDisplayResults(results);
+        setPaginator(createPaginator(results));
+        setCurrentPage(0); // Reset to first page when results change
       } else {
-        // If no match found, redirect to the first option
         router.push(`/tableview/${dropdownItems[0].param}`);
       }
     } else if (params.option === undefined) {
-      // If no option is provided, redirect to the first option
       router.push(`/tableview/${dropdownItems[0].param}`);
     }
   }, [params.option, router, dropdownItems, merged_df]);
@@ -89,7 +86,20 @@ export default function TableViewLayout({ children }: { children: ReactNode }) {
   const handleOptionClick = (param: string) => {
     router.push(`/tableview/${param}`);
   };
-  if (!displayResults) return null;
+
+  const incrementPage = () => {
+    if (paginator && currentPage < paginator.pageCount - 1) {
+      setCurrentPage((p) => p + 1);
+    }
+  };
+
+  const decrementPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage((p) => p - 1);
+    }
+  };
+
+  const currentPageItems = paginator ? paginator.getPage(currentPage) : [];
   return (
     <>
       <div className="container mx-auto py-6">
@@ -124,9 +134,9 @@ export default function TableViewLayout({ children }: { children: ReactNode }) {
         </Breadcrumb>
       </div>
       <main className="py-6 sm:px-6 lg:px-8">
+        <p className="text-center mb-4 text-zinc-500">A list of the {selected}</p>
         <div className="overflow-x-auto">
           <Table>
-            <TableCaption>A list of the {selected}</TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead>Description</TableHead>
@@ -148,7 +158,7 @@ export default function TableViewLayout({ children }: { children: ReactNode }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {displayResults.slice(0, 100).map((res, id) => (
+              {currentPageItems.map((res, id) => (
                 <TableRow key={res.OrderId + id} className="">
                   <TableCell className="font-medium">{res.Description}</TableCell>
                   <TableCell className="font-medium">{res.InvoiceAmount}</TableCell>
@@ -169,6 +179,14 @@ export default function TableViewLayout({ children }: { children: ReactNode }) {
               ))}
             </TableBody>
           </Table>
+        </div>
+        <div className="flex gap-6 mx-auto items-center justify-center mt-6">
+          <Button variant={'outline'} onClick={decrementPage} disabled={currentPage === 0}>
+            Prev
+          </Button>
+          <Button variant={'outline'} onClick={incrementPage}>
+            Next
+          </Button>
         </div>
       </main>
     </>
